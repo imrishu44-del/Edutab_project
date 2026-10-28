@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartLearn OS - Advanced Ecosystem</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f0f2f5; color: #333; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        
+        /* Top Mobile Header */
+        .mobile-header { background: #1e293b; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 100; }
+        .mobile-header h2 { font-size: 18px; color: #38bdf8; }
+        .menu-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+
+        /* Main App Layout */
+        .app-container { display: flex; flex: 1; position: relative; overflow: hidden; width: 100%; }
+
+        /* Sidebar Styling (Drawer for Mobile) */
+        .sidebar { position: absolute; left: -260px; top: 0; width: 260px; height: 100%; background-color: #1e293b; color: white; display: flex; flex-direction: column; padding: 20px; transition: left 0.3s ease; z-index: 200; box-shadow: 4px 0px 10px rgba(0,0,0,0.2); overflow-y: auto; }
+        .sidebar.open { left: 0; }
+        .sidebar h2 { font-size: 18px; margin-bottom: 25px; color: #38bdf8; text-align: center; }
+        .sidebar a { color: #cbd5e1; text-decoration: none; padding: 12px 15px; margin-bottom: 8px; border-radius: 8px; transition: 0.3s; cursor: pointer; display: block; font-size: 14px; }
+        .sidebar a:hover, .sidebar a.active { background-color: #334155; color: white; }
+
+        /* Main Content Area */
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; width: 100%; padding: 15px; }
+        .header { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .header h1 { font-size: 15px; color: #0f172a; }
+        .user-profile { font-size: 12px; color: #64748b; background: #e2e8f0; padding: 4px 8px; border-radius: 15px; }
+
+        .dashboard-body { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        
+        /* Card Styling */
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-left: 5px solid #38bdf8; }
+        .card h3 { font-size: 16px; margin-bottom: 8px; color: #1e293b; }
+        .card p { font-size: 13px; color: #64748b; margin-bottom: 12px; }
+        .card button { background-color: #0284c7; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+
+        /* Active Module Display Area */
+        .module-container { display: none; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .active-view { display: block; }
+
+        /* Chatbot UI styles */
+        .chat-box { height: 220px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; overflow-y: auto; background: #f8fafc; margin-bottom: 10px; font-size: 13px; }
+        .chat-msg { margin-bottom: 8px; padding: 8px 12px; border-radius: 6px; max-width: 80%; }
+        .bot-msg { background: #e2e8f0; color: #1e293b; }
+        .user-msg { background: #0284c7; color: white; margin-left: auto; text-align: right; }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Top Navigation Header -->
+    <div class="mobile-header">
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+        <h2>SmartLearn OS</h2>
+        <div style="font-size: 12px; color: #38bdf8;">Online AI</div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Menu (Collapsible) -->
+        <div class="sidebar" id="sidebarMenu">
+            <h2>Ecosystem Menu</h2>
+            <a onclick="switchTab('home')" class="active" id="nav-home">🏠 Dashboard Home</a>
+            <a onclick="switchTab('notes')" id="nav-notes">📝 Digital Copy & Notes</a>
+            <a onclick="switchTab('lab')" id="nav-lab">🥽 3D Virtual Labs</a>
+            <a onclick="switchTab('ai-tutor')" id="nav-ai-tutor">🤖 AI Personal Tutor</a>
+            <a onclick="switchTab('games')" id="nav-games">🎮 Mind Sharpener Games</a>
+            <a onclick="switchTab('homework')" id="nav-homework">📤 Homework & Sync</a>
+            <a onclick="switchTab('analytics')" id="nav-analytics">📊 Analytics & Reports</a>
+            <a onclick="switchTab('exam')" id="nav-exam">🔒 Exam Lockdown Mode</a>
+        </div>
+
+        <!-- Main Content Panel -->
+        <div class="main-content" onclick="closeSidebarOnClickOutside(event)">
+            <div class="header">
+                <h1 id="page-title">Welcome Kumar Rishav, Class 10th</h1>
+                <div class="user-profile">Active</div>
+            </div>
+
+            <!-- 1. Home Dashboard View -->
+            <div id="home" class="module-container active-view">
+                <div class="dashboard-body">
+                    <div class="card" style="border-left-color: #3b82f6;">
+                        <h3>Digital Notebook</h3>
+                        <p>Hath se likhne aur notes banane ka digital page.</p>
+                        <button onclick="switchTab('notes')">Open Notebook</button>
+                    </div>
+                    <div class="card" style="border-left-color: #10b981;">
+                        <h3>3D Science Lab</h3>
+                        <p>Chasma pehankar Physics/Chem ke experiments karein.</p>
+                        <button onclick="switchTab('lab')">Enter Lab</button>
+                    </div>
+                    <div class="card" style="border-left-color: #8b5cf6;">
+                        <h3>AI Doubt Solver</h3>
+                        <p>Kisi bhi sawal ka turant instant jawab paayein.</p>
+                        <button onclick="switchTab('ai-tutor')">Ask AI Tutor</button>
+                    </div>
+                    <div class="card" style="border-left-color: #f59e0b;">
+                        <h3>Mind Games (15m limit)</h3>
+                        <p>Brain sharpen karne wale time-locked puzzle games.</p>
+                        <button onclick="switchTab('games')">Play Games</button>
+                    </div>
+                    <div class="card" style="border-left-color: #06b6d4;">
+                        <h3>Performance Reports</h3>
+                        <p>Apna strong aur weak subject analysis dekhein.</p>
+                        <button onclick="switchTab('analytics')">View Reports</button>
+                    </div>
+                    <div class="card" style="border-left-color: #ef4444;">
+                        <h3>Exam Secure Browser</h3>
+                        <p>Exam ke dauran locked screen aur answer sheet portal.</p>
+                        <button onclick="switchTab('exam')">Start Exam</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Notes View -->
+            <div id="notes" class="module-container">
+                <h2>Digital Notebook</h2>
+                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Stylus pen se likh kar apne notes save karein.</p>
+                <textarea style="width: 100%; height: 250px; margin-top: 15px; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px;" placeholder="Apne notes yahan likhein..."></textarea>
+            </div>
+
+            <!-- 3. 3D Lab View -->
+            <div id="lab" class="module-container">
+                <h2>Immersive 3D Virtual Lab</h2>
+                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">3D Glasses mode active.</p>
+                <div style="background: #1e293b; color: white; height: 200px; display: flex; align-items: center; justify-content: center; border-radius: 8px; margin-top: 15px; font-size: 14px; text-align: center; padding: 10px;">
+                    [ 3D Virtual Physics / Chemistry Experiment Screen ]
+                </div>
+            </div>
+
+            <!-- 4. AI Personal Tutor View (NEW) -->
+            <div id="ai-tutor" class="module-container">
+                <h2>🤖 AI Personal Tutor</h2>
+                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Apna padhai ka doubt yahan puchein:</p>
+                <div class="chat-box" id="chatContainer">
+                    <div class="chat-msg bot-msg">Namaste! Main aapka AI Study Assistant hoon. Aaj kya samajhna chahte hain?</div>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+                    <input type="text" id="userInput" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 13px;" placeholder="Sawal yahan type karein...">
+                    <button onclick="sendQuery()" style="background: #8b5cf6; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer;">Send</button>
+                </div>
+            </div>
+
+            <!-- 5. Games View -->
+            <div id="games" class="module-container">
+                <h2>Mind Sharpener Games</h2>
+                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Daily Limit: 15 Mins. Time left today: 14 mins.</p>
+                <button style="margin-top: 15px; background: #f59e0b; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;">Start Puzzle Challenge</button>
+            </div>
+
+            <!-- 6. Homework View -->
+            <div id="homework" class="module-container">
+                <h2>Homework & Assignment</h2>
+                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Completed homework direct teacher ko bhejein.</p>
+                <input type="file" style="margin-top: 15px; display: block; font-size: 13px;">
+                <button style="margin-top: 15px; background: #059669; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;" onclick="alert('Homework successfully transferred to Teacher Tablet!')">Submit to Teacher</button>
+            </div>
+
+            <!-- 7. Analytics View (NEW) -->
+            <div id="analytics" class="module-container">
+                <h2>📊 Performance Analytics</h2>
+                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Aapka subject-wise progress report:</p>
+                <div style="margin-top: 15px; font-size: 13px;">
+                    <p><b>Mathematics:</b> 85% (Strong)</p>
+                    <div style="background: #e2e8f0; border-radius: 4px; height: 10px; margin: 5px 0 15px 0;"><div style="background: #10b981; width: 85%; height: 100%; border-radius: 4px;"></div></div>
+                    
+                    <p><b>Science (Physics):</b> 60% (Needs Focus)</p>
+                    <div style="background: #e2e8f0; border-radius: 4px; height: 10px; margin: 5px 0 15px 0;"><div style="background: #f59e0b; width: 60%; height: 100%; border-radius: 4px;"></div></div>
+
+                    <p><b>Daily Screen Time:</b> 3 Hours 20 Mins</p>
+                </div>
+            </div>
+
+            <!-- 8. Exam Mode View -->
+            <div id="exam" class="module-container">
+                <h2>🔒 Secure Exam Mode</h2>
+                <p style="margin-top: 5px; color: #ef4444; font-size: 12px; font-weight: bold;">Warning: Baaki saari apps block hain.</p>
+                <div style="background: white; border: 1px solid #ef4444; padding: 15px; margin-top: 15px; border-radius: 8px;">
+                    <p style="font-size: 14px;"><b>Question 1:</b> Newton ka third law kya kehta hai?</p>
+                    <textarea style="width: 100%; height: 90px; margin-top: 10px; padding: 8px;" placeholder="Answer yahan likhein..."></textarea>
+                    <button style="margin-top: 12px; background: #ef4444; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;" onclick="alert('Answer sheet locked and submitted securely!')">Lock & Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            let sidebar = document.getElementById('sidebarMenu');
+            sidebar.classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            let modules = document.querySelectorAll('.module-container');
+            modules.forEach(m => m.classList.remove('active-view'));
+
+            let navs = document.querySelectorAll('.sidebar a');
+            navs.forEach(n => n.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active-view');
+            document.getElementById('nav-' + tabId).classList.add('active');
+
+            document.getElementById('sidebarMenu').classList.remove('open');
+        }
+
+        function closeSidebarOnClickOutside(event) {
+            let sidebar = document.getElementById('sidebarMenu');
+            if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+            }
+        }
+
+        function sendQuery() {
+            let inputField = document.getElementById('userInput');
+            let text = inputField.value.trim();
+            if(text === "") return;
+
+            let chatContainer = document.getElementById('chatContainer');
+            
+            // Add user message
+            chatContainer.innerHTML += `<div class="chat-msg user-msg">${text}</div>`;
+            inputField.value = "";
+            
+            // Simulate AI reply after a short pause
+            setTimeout(() => {
+                chatContainer.innerHTML += `<div class="chat-msg bot-msg">AI Tutor: Yeh ek accha sawal hai! Iska concept yeh hai ki... (Study Mode Active)</div>`;
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 600);
+
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>

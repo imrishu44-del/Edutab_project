@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartLearn OS - Role Based Ecosystem</title>
+    <title>SmartLearn OS - Direct Dashboard</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f0f2f5; color: #333; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
@@ -41,17 +41,6 @@
         .module-container { display: none; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .active-view { display: block; }
 
-        /* Login Screen Styling */
-        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1e293b; z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 20px; }
-        .login-box { background: white; color: #333; padding: 25px; border-radius: 12px; width: 100%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        .login-box h2 { color: #0f172a; margin-bottom: 5px; font-size: 20px; }
-        .login-box p { color: #64748b; font-size: 12px; margin-bottom: 15px; }
-        .role-selector { display: flex; gap: 10px; margin-bottom: 15px; }
-        .role-btn { flex: 1; padding: 10px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; }
-        .role-btn.selected { background: #0284c7; color: white; border-color: #0284c7; }
-        .google-btn { background: white; border: 1px solid #cbd5e1; color: #333; width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .google-btn:hover { background: #f8fafc; }
-
         /* Chatbot UI */
         .chat-box { height: 200px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; overflow-y: auto; background: #f8fafc; margin-bottom: 10px; font-size: 13px; }
         .chat-msg { margin-bottom: 8px; padding: 8px 12px; border-radius: 6px; max-width: 80%; }
@@ -61,35 +50,17 @@
 </head>
 <body>
 
-    <!-- 1. ROLE & GMAIL LOGIN SCREEN -->
-    <div id="login-screen">
-        <div class="login-box">
-            <h2>SmartLearn OS</h2>
-            <p>Apna role chunein aur login karein</p>
-            
-            <div class="role-selector">
-                <button class="role-btn selected" id="btn-student" onclick="setRole('student')">Student</button>
-                <button class="role-btn" id="btn-teacher" onclick="setRole('teacher')">Teacher</button>
-            </div>
-
-            <button class="google-btn" onclick="loginWithGoogle()">
-                <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.18v3.15C3.17 21.32 7.23 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.18C.43 8.13 0 9.83 0 11.6s.43 3.47 1.18 4.99l4.09-2.35z"/><path fill="#EA4335" d="M12 4.75c1.76 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.17 2.68 1.18 6.61l4.09 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
-                Sign in with Gmail (Free)
-            </button>
-        </div>
-    </div>
-
     <!-- Mobile Top Header -->
     <div class="mobile-header">
         <button class="menu-btn" onclick="toggleSidebar()">☰</button>
         <h2 id="appHeaderTitle">SmartLearn OS</h2>
-        <div style="font-size: 11px; color: #38bdf8;" id="roleDisplayBadge">Student</div>
+        <div style="font-size: 11px; color: #38bdf8;" id="roleDisplayBadge">Student Mode</div>
     </div>
 
     <div class="app-container">
         <!-- Sidebar Menu -->
         <div class="sidebar" id="sidebarMenu">
-            <h2 id="sidebarTitle">Student Menu</h2>
+            <h2 id="sidebarTitle">Menu</h2>
             <a onclick="switchTab('home')" class="active" id="nav-home">🏠 Dashboard Home</a>
             
             <div id="studentMenus">
@@ -115,8 +86,11 @@
         <!-- Main Content Panel -->
         <div class="main-content" onclick="closeSidebarOnClickOutside(event)">
             <div class="header">
-                <h1 id="page-title">Welcome Student Dashboard</h1>
-                <div class="user-profile" id="topUserEmail">imrishu44@gmail.com</div>
+                <h1 id="page-title">Welcome Dashboard</h1>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <button onclick="switchRoleView('student')" style="background: #0284c7; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer;">Student</button>
+                    <button onclick="switchRoleView('teacher')" style="background: #059669; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer;">Teacher</button>
+                </div>
             </div>
 
             <!-- HOME DASHBOARD -->
@@ -147,154 +121,5 @@
                 <div class="chat-box" id="chatContainer">
                     <div class="chat-msg bot-msg">Namaste! Main aapka AI Study Assistant hoon. Aaj kya samajhna chahte hain?</div>
                 </div>
-                <div style="display: flex; gap: 8px; margin-top: 10px;">
-                    <input type="text" id="userInput" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 13px;" placeholder="Sawal yahan type karein...">
-                    <button onclick="sendQuery()" style="background: #8b5cf6; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer;">Send</button>
-                </div>
-            </div>
-
-            <!-- Games View -->
-            <div id="games" class="module-container">
-                <h2>Mind Sharpener Games</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Daily Limit: 15 Mins.</p>
-                <button style="margin-top: 15px; background: #f59e0b; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;">Start Puzzle Challenge</button>
-            </div>
-
-            <!-- Homework View -->
-            <div id="homework" class="module-container">
-                <h2>Homework & Assignment</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Completed homework direct teacher ko bhejein.</p>
-                <input type="file" style="margin-top: 15px; display: block; font-size: 13px;">
-                <button style="margin-top: 15px; background: #059669; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;" onclick="alert('Homework successfully transferred!')">Submit to Teacher</button>
-            </div>
-
-            <!-- Analytics View -->
-            <div id="analytics" class="module-container">
-                <h2>📊 Performance Analytics</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Aapka subject-wise progress report:</p>
-                <div style="margin-top: 15px; font-size: 13px;">
-                    <p><b>Mathematics:</b> 85% (Strong)</p>
-                    <div style="background: #e2e8f0; border-radius: 4px; height: 10px; margin: 5px 0 15px 0;"><div style="background: #10b981; width: 85%; height: 100%; border-radius: 4px;"></div></div>
-                    <p><b>Science (Physics):</b> 60% (Needs Focus)</p>
-                    <div style="background: #e2e8f0; border-radius: 4px; height: 10px; margin: 5px 0 15px 0;"><div style="background: #f59e0b; width: 60%; height: 100%; border-radius: 4px;"></div></div>
-                </div>
-            </div>
-
-            <!-- Teacher Views -->
-            <div id="teacher-check" class="module-container">
-                <h2>📥 Student Homework Submissions</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Bacho ke assignments yahan check karein:</p>
-                <div style="margin-top: 15px; background: #f8fafc; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;">
-                    <p><b>Student:</b> Rahul Kumar (Class 10)</p>
-                    <button style="margin-top: 10px; background: #059669; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;" onclick="alert('Checked & Graded successfully!')">Check & Give Marks</button>
-                </div>
-            </div>
-
-            <div id="teacher-exam" class="module-container">
-                <h2>🛡️ Exam Lockdown Control Center</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Sare student tablets par exam lockdown trigger karein:</p>
-                <button style="margin-top: 15px; background: #ef4444; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;" onclick="alert('Exam Mode Activated!')">Activate Lockdown</button>
-            </div>
-
-            <div id="teacher-attendance" class="module-container">
-                <h2>📋 Attendance & Leave Management</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Leave applications:</p>
-                <div style="margin-top: 15px; background: #f8fafc; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;">
-                    <p><b>Application from:</b> Priya Kumari (1 Day Leave)</p>
-                    <button style="margin-top: 10px; background: #0284c7; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;" onclick="alert('Leave Approved!')">Approve Leave</button>
-                </div>
-            </div>
-
-            <!-- Profile View -->
-            <div id="profile" class="module-container">
-                <h2>👤 My Profile</h2>
-                <div style="margin-top: 15px; font-size: 14px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1;">
-                    <p><b>Name:</b> Kumar Rishav Singh</p>
-                    <p style="margin-top: 8px;"><b>Email:</b> imrishu44@gmail.com</p>
-                    <p style="margin-top: 8px;" id="profileRoleText"><b>Role:</b> Student</p>
-                </div>
-            </div>
-
-            <!-- Settings View -->
-            <div id="settings" class="module-container">
-                <h2>⚙️ Advanced App Settings</h2>
-                <div style="margin-top: 15px; font-size: 14px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
-                        <span>App Language</span>
-                        <select style="padding: 5px; border-radius: 4px;">
-                            <option>Hindi (हिंदी)</option>
-                            <option>English</option>
-                        </select>
-                    </div>
-                    <button style="margin-top: 20px; background: #ef4444; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 13px;" onclick="logout()">Logout Account</button>
-                </div>
-            </div>
-
-            <!-- Exam Mode View -->
-            <div id="exam" class="module-container">
-                <h2>🔒 Secure Exam Mode</h2>
-                <p style="margin-top: 5px; color: #ef4444; font-size: 12px; font-weight: bold;">Warning: Baaki saari apps block hain.</p>
-                <div style="background: white; border: 1px solid #ef4444; padding: 15px; margin-top: 15px; border-radius: 8px;">
-                    <p style="font-size: 14px;"><b>Question 1:</b> Newton ka third law kya kehta hai?</p>
-                    <textarea style="width: 100%; height: 90px; margin-top: 10px; padding: 8px;" placeholder="Answer yahan likhein..."></textarea>
-                    <button style="margin-top: 12px; background: #ef4444; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;" onclick="alert('Submitted successfully!')">Lock & Submit</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <script>
-        let selectedRole = 'student';
-
-        function setRole(role) {
-            selectedRole = role;
-            document.getElementById('btn-student').classList.remove('selected');
-            document.getElementById('btn-teacher').classList.remove('selected');
-            document.getElementById('btn-' + role).classList.add('selected');
-        }
-
-        function loginWithGoogle() {
-            document.getElementById('login-screen').style.display = 'none';
-            
-            let homeContainer = document.getElementById('homeCardContainer');
-            if(selectedRole === 'teacher') {
-                document.getElementById('sidebarTitle').innerText = 'Teacher Portal';
-                document.getElementById('studentMenus').style.display = 'none';
-                document.getElementById('teacherMenus').style.display = 'block';
-                document.getElementById('roleDisplayBadge').innerText = 'Teacher';
-                document.getElementById('page-title').innerText = 'Welcome Teacher Dashboard';
-                document.getElementById('profileRoleText').innerHTML = '<b>Role:</b> Senior Educator';
-                
-                homeContainer.innerHTML = `
-                    <div class="card" style="border-left-color: #059669;">
-                        <h3>Check Homework</h3>
-                        <p>Bacho dwara bheje gaye assignments check karein.</p>
-                        <button onclick="switchTab('teacher-check')">Open Submissions</button>
-                    </div>
-                    <div class="card" style="border-left-color: #ef4444;">
-                        <h3>Exam Lockdown</h3>
-                        <p>Student tablets par secure exam mode trigger karein.</p>
-                        <button onclick="switchTab('teacher-exam')">Manage Exams</button>
-                    </div>
-                `;
-            } else {
-                document.getElementById('sidebarTitle').innerText = 'Student Menu';
-                document.getElementById('studentMenus').style.display = 'block';
-                document.getElementById('teacherMenus').style.display = 'none';
-                document.getElementById('roleDisplayBadge').innerText = 'Student';
-                document.getElementById('page-title').innerText = 'Welcome Student Dashboard';
-                document.getElementById('profileRoleText').innerHTML = '<b>Role:</b> Student';
-                
-                homeContainer.innerHTML = `
-                    <div class="card" style="border-left-color: #3b82f6;">
-                        <h3>Digital Notebook</h3>
-                        <p>Hath se likhne aur notes banane ka digital page.</p>
-                        <button onclick="switchTab('notes')">Open Notebook</button>
-                    </div>
-                    <div class="card" style="border-left-color: #10b981;">
-                        <h3>3D Science Lab</h3>
-                        <p>Chasma pehankar Physics/Chem ke experiments karein.</p>
-                        <button onclick="switchTab('lab')">Enter Lab</button>
-                    </div>
-           
+                <div style="display: flex; gap: 8px; margin-top: 10
+                    

@@ -40,6 +40,8 @@
         <button onclick="showTab('notes')" id="btn-notes">Notes</button>
         <button onclick="showTab('lab')" id="btn-lab">3D Lab</button>
         <button onclick="showTab('exam')" id="btn-exam">Exam</button>
+        <button onclick="showTab('profile')" id="btn-profile">Profile</button>
+        <button onclick="showTab('settings')" id="btn-settings">Settings</button>
         <button onclick="switchRole()" id="btn-role" style="background: #059669;">Switch to Teacher</button>
     </div>
 
@@ -91,27 +93,56 @@
                 <button style="margin-top: 10px; background: #ef4444; color: white; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer;" onclick="alert('Submitted successfully!')">Submit Answer</button>
             </div>
         </div>
+
+        <!-- PROFILE SECTION -->
+        <div id="profile" class="section">
+            <h2>👤 My Profile</h2>
+            <div style="margin-top: 15px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px;">
+                <p><b>Name:</b> Kumar Rishav Singh</p>
+                <p style="margin-top: 8px;"><b>Email:</b> imrishu44@gmail.com</p>
+                <p style="margin-top: 8px;" id="profile-role"><b>Role:</b> Student</p>
+            </div>
+        </div>
+
+        <!-- SETTINGS SECTION -->
+        <div id="settings" class="section">
+            <h2>⚙️ Advanced Settings</h2>
+            <div style="margin-top: 15px; font-size: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    <span>App Language (Bhasha)</span>
+                    <select style="padding: 5px; border-radius: 4px;">
+                        <option>Hindi (हिंदी)</option>
+                        <option>English</option>
+                    </select>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    <span>Blue Light Eye Shield</span>
+                    <input type="checkbox" checked style="width: 18px; height: 18px;">
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    <span>Clear Storage Cache</span>
+                    <button style="background: #64748b; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 12px; cursor: pointer;" onclick="alert('Cache cleared!')">Clear</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
         let isTeacher = false;
 
         function showTab(tabId) {
-            // Hide all sections
             let secs = document.querySelectorAll('.section');
             secs.forEach(s => s.classList.remove('active'));
 
-            // Remove active from nav buttons
             let btns = document.querySelectorAll('.nav-bar button');
             btns.forEach(b => {
                 if(b.id !== 'btn-role') b.classList.remove('active');
             });
 
-            // Show selected section
             let target = document.getElementById(tabId);
             if(target) target.classList.add('active');
 
-            let activeBtn = document.getElementById('btn-듯' + tabId) || document.getElementById('btn-' + tabId);
+            let activeBtn = document.getElementById('btn-' + tabId);
             if(activeBtn && activeBtn.id !== 'btn-role') activeBtn.classList.add('active');
         }
 
@@ -121,12 +152,14 @@
             let roleBtn = document.getElementById('btn-role');
             let dashTitle = document.getElementById('dash-title');
             let dashCards = document.getElementById('dash-cards');
+            let profileRole = document.getElementById('profile-role');
 
             if(isTeacher) {
                 badge.innerText = "Teacher";
                 badge.style.background = "#059669";
                 roleBtn.innerText = "Switch to Student";
                 dashTitle.innerText = "Teacher Portal";
+                profileRole.innerHTML = "<b>Role:</b> Senior Educator";
                 dashCards.innerHTML = `
                     <div class="card">
                         <h3>Check Homework</h3>
@@ -144,6 +177,7 @@
                 badge.style.background = "#0284c7";
                 roleBtn.innerText = "Switch to Teacher";
                 dashTitle.innerText = "Student Dashboard";
+                profileRole.innerHTML = "<b>Role:</b> Student";
                 dashCards.innerHTML = `
                     <div class="card">
                         <h3>Digital Notebook</h3>

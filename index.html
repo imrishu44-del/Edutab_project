@@ -87,12 +87,11 @@
     </div>
 
     <div class="app-container">
-        <!-- Sidebar Menu (Dynamic based on Role) -->
+        <!-- Sidebar Menu -->
         <div class="sidebar" id="sidebarMenu">
             <h2 id="sidebarTitle">Student Menu</h2>
             <a onclick="switchTab('home')" class="active" id="nav-home">🏠 Dashboard Home</a>
             
-            <!-- Student Specific Menus -->
             <div id="studentMenus">
                 <a onclick="switchTab('notes')" id="nav-notes">📝 Digital Copy & Notes</a>
                 <a onclick="switchTab('lab')" id="nav-lab">🥽 3D Virtual Labs</a>
@@ -103,14 +102,12 @@
                 <a onclick="switchTab('exam')" id="nav-exam">🔒 Exam Lockdown Mode</a>
             </div>
 
-            <!-- Teacher Specific Menus (Initially Hidden) -->
             <div id="teacherMenus" style="display: none;">
-                <a onclick="switchTab('teacher-check')" id="nav-teacher-check">📥 Check Homework Submissions</a>
+                <a onclick="switchTab('teacher-check')" id="nav-teacher-check">📥 Check Homework</a>
                 <a onclick="switchTab('teacher-exam')" id="nav-exam-control">🛡️ Manage Exam Lockdowns</a>
-                <a onclick="switchTab('teacher-attendance')" id="nav-attendance">📋 Student Attendance / Leave</a>
+                <a onclick="switchTab('teacher-attendance')" id="nav-attendance">📋 Student Attendance</a>
             </div>
 
-            <!-- Common Menus -->
             <a onclick="switchTab('profile')" id="nav-profile">👤 My Profile</a>
             <a onclick="switchTab('settings')" id="nav-settings">⚙️ Advanced Settings</a>
         </div>
@@ -122,21 +119,19 @@
                 <div class="user-profile" id="topUserEmail">imrishu44@gmail.com</div>
             </div>
 
-            <!-- 1. STUDENT HOME DASHBOARD -->
+            <!-- HOME DASHBOARD -->
             <div id="home" class="module-container active-view">
-                <div class="dashboard-body" id="homeCardContainer">
-                    <!-- Will be dynamically populated via JS based on role -->
-                </div>
+                <div class="dashboard-body" id="homeCardContainer"></div>
             </div>
 
-            <!-- 2. Notes View -->
+            <!-- Notes View -->
             <div id="notes" class="module-container">
                 <h2>Digital Notebook</h2>
                 <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Stylus pen se likh kar apne notes save karein.</p>
                 <textarea style="width: 100%; height: 250px; margin-top: 15px; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px;" placeholder="Apne notes yahan likhein..."></textarea>
             </div>
 
-            <!-- 3. 3D Lab View -->
+            <!-- 3D Lab View -->
             <div id="lab" class="module-container">
                 <h2>Immersive 3D Virtual Lab</h2>
                 <p style="margin-top: 5px; color: #64748b; font-size: 13px;">3D Glasses mode active.</p>
@@ -145,7 +140,7 @@
                 </div>
             </div>
 
-            <!-- 4. AI Personal Tutor View -->
+            <!-- AI Tutor View -->
             <div id="ai-tutor" class="module-container">
                 <h2>🤖 AI Personal Tutor</h2>
                 <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Apna padhai ka doubt yahan puchein:</p>
@@ -158,43 +153,39 @@
                 </div>
             </div>
 
-            <!-- 5. Games View -->
+            <!-- Games View -->
             <div id="games" class="module-container">
                 <h2>Mind Sharpener Games</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Daily Limit: 15 Mins. Time left today: 14 mins.</p>
+                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Daily Limit: 15 Mins.</p>
                 <button style="margin-top: 15px; background: #f59e0b; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;">Start Puzzle Challenge</button>
             </div>
 
-            <!-- 6. Homework View -->
+            <!-- Homework View -->
             <div id="homework" class="module-container">
                 <h2>Homework & Assignment</h2>
                 <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Completed homework direct teacher ko bhejein.</p>
                 <input type="file" style="margin-top: 15px; display: block; font-size: 13px;">
-                <button style="margin-top: 15px; background: #059669; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;" onclick="alert('Homework successfully transferred to Teacher Tablet!')">Submit to Teacher</button>
+                <button style="margin-top: 15px; background: #059669; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;" onclick="alert('Homework successfully transferred!')">Submit to Teacher</button>
             </div>
 
-            <!-- 7. Analytics View -->
+            <!-- Analytics View -->
             <div id="analytics" class="module-container">
                 <h2>📊 Performance Analytics</h2>
                 <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Aapka subject-wise progress report:</p>
                 <div style="margin-top: 15px; font-size: 13px;">
                     <p><b>Mathematics:</b> 85% (Strong)</p>
                     <div style="background: #e2e8f0; border-radius: 4px; height: 10px; margin: 5px 0 15px 0;"><div style="background: #10b981; width: 85%; height: 100%; border-radius: 4px;"></div></div>
-                    
                     <p><b>Science (Physics):</b> 60% (Needs Focus)</p>
                     <div style="background: #e2e8f0; border-radius: 4px; height: 10px; margin: 5px 0 15px 0;"><div style="background: #f59e0b; width: 60%; height: 100%; border-radius: 4px;"></div></div>
-
-                    <p><b>Daily Screen Time:</b> 3 Hours 20 Mins</p>
                 </div>
             </div>
 
-            <!-- TEACHER EXCLUSIVE VIEWS -->
+            <!-- Teacher Views -->
             <div id="teacher-check" class="module-container">
                 <h2>📥 Student Homework Submissions</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Bacho dwara bheje gaye assignments yahan check karein:</p>
+                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Bacho ke assignments yahan check karein:</p>
                 <div style="margin-top: 15px; background: #f8fafc; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;">
                     <p><b>Student:</b> Rahul Kumar (Class 10)</p>
-                    <p style="font-size: 12px; color: #64748b;">Submitted: Math Homework Chapter 4</p>
                     <button style="margin-top: 10px; background: #059669; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;" onclick="alert('Checked & Graded successfully!')">Check & Give Marks</button>
                 </div>
             </div>
@@ -202,72 +193,51 @@
             <div id="teacher-exam" class="module-container">
                 <h2>🛡️ Exam Lockdown Control Center</h2>
                 <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Sare student tablets par exam lockdown trigger karein:</p>
-                <button style="margin-top: 15px; background: #ef4444; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;" onclick="alert('Exam Mode Activated on all student tablets!')">Activate Lockdown on All Tabs</button>
+                <button style="margin-top: 15px; background: #ef4444; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;" onclick="alert('Exam Mode Activated!')">Activate Lockdown</button>
             </div>
 
             <div id="teacher-attendance" class="module-container">
                 <h2>📋 Attendance & Leave Management</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Leave applications aur daily attendance:</p>
+                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Leave applications:</p>
                 <div style="margin-top: 15px; background: #f8fafc; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;">
-                    <p><b>Application from:</b> Priya Kumari</p>
-                    <p style="font-size: 12px; color: #64748b;">Reason: Fever (1 Day Leave)</p>
+                    <p><b>Application from:</b> Priya Kumari (1 Day Leave)</p>
                     <button style="margin-top: 10px; background: #0284c7; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;" onclick="alert('Leave Approved!')">Approve Leave</button>
                 </div>
             </div>
 
-            <!-- 8. Profile View -->
+            <!-- Profile View -->
             <div id="profile" class="module-container">
                 <h2>👤 My Profile</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Account Details:</p>
                 <div style="margin-top: 15px; font-size: 14px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1;">
                     <p><b>Name:</b> Kumar Rishav Singh</p>
                     <p style="margin-top: 8px;"><b>Email:</b> imrishu44@gmail.com</p>
-                    <p style="margin-top: 8px;" id="profileRoleText"><b>Role:</b> Student (Class 10th)</p>
-                    <button style="margin-top: 15px; background: #0284c7; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;">Edit Profile</button>
+                    <p style="margin-top: 8px;" id="profileRoleText"><b>Role:</b> Student</p>
                 </div>
             </div>
 
-            <!-- 9. Advanced Settings View (Expanded) -->
+            <!-- Settings View -->
             <div id="settings" class="module-container">
                 <h2>⚙️ Advanced App Settings</h2>
-                <p style="margin-top: 5px; color: #64748b; font-size: 13px;">Configure your ecosystem preferences:</p>
                 <div style="margin-top: 15px; font-size: 14px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
-                        <span>App Language (Bhasha)</span>
-                        <select style="padding: 5px; border-radius: 4px; border: 1px solid #cbd5e1;">
+                        <span>App Language</span>
+                        <select style="padding: 5px; border-radius: 4px;">
                             <option>Hindi (हिंदी)</option>
                             <option>English</option>
-                            <option>Bhojpuri (भोजपुरी)</option>
                         </select>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
-                        <span>Blue Light Eye Shield</span>
-                        <input type="checkbox" checked style="width: 18px; height: 18px;">
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
-                        <span>Offline Auto-Sync Data</span>
-                        <input type="checkbox" checked style="width: 18px; height: 18px;">
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
-                        <span>Push Notifications</span>
-                        <input type="checkbox" checked style="width: 18px; height: 18px;">
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
-                        <span>Storage Cache Clear</span>
-                        <button style="background: #64748b; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 12px; cursor: pointer;" onclick="alert('Cache cleared successfully!')">Clear Cache</button>
                     </div>
                     <button style="margin-top: 20px; background: #ef4444; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 13px;" onclick="logout()">Logout Account</button>
                 </div>
             </div>
 
-            <!-- 10. Exam Mode View -->
+            <!-- Exam Mode View -->
             <div id="exam" class="module-container">
                 <h2>🔒 Secure Exam Mode</h2>
                 <p style="margin-top: 5px; color: #ef4444; font-size: 12px; font-weight: bold;">Warning: Baaki saari apps block hain.</p>
                 <div style="background: white; border: 1px solid #ef4444; padding: 15px; margin-top: 15px; border-radius: 8px;">
                     <p style="font-size: 14px;"><b>Question 1:</b> Newton ka third law kya kehta hai?</p>
                     <textarea style="width: 100%; height: 90px; margin-top: 10px; padding: 8px;" placeholder="Answer yahan likhein..."></textarea>
-                    <button style="margin-top: 12px; background: #ef4444; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;" onclick="alert('Answer sheet locked and submitted securely!')">Lock & Submit</button>
+                    <button style="margin-top: 12px; background: #ef4444; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;" onclick="alert('Submitted successfully!')">Lock & Submit</button>
                 </div>
             </div>
 
@@ -282,4 +252,49 @@
             document.getElementById('btn-student').classList.remove('selected');
             document.getElementById('btn-teacher').classList.remove('selected');
             document.getElementById('btn-' + role).classList.add('selected');
- 
+        }
+
+        function loginWithGoogle() {
+            document.getElementById('login-screen').style.display = 'none';
+            
+            let homeContainer = document.getElementById('homeCardContainer');
+            if(selectedRole === 'teacher') {
+                document.getElementById('sidebarTitle').innerText = 'Teacher Portal';
+                document.getElementById('studentMenus').style.display = 'none';
+                document.getElementById('teacherMenus').style.display = 'block';
+                document.getElementById('roleDisplayBadge').innerText = 'Teacher';
+                document.getElementById('page-title').innerText = 'Welcome Teacher Dashboard';
+                document.getElementById('profileRoleText').innerHTML = '<b>Role:</b> Senior Educator';
+                
+                homeContainer.innerHTML = `
+                    <div class="card" style="border-left-color: #059669;">
+                        <h3>Check Homework</h3>
+                        <p>Bacho dwara bheje gaye assignments check karein.</p>
+                        <button onclick="switchTab('teacher-check')">Open Submissions</button>
+                    </div>
+                    <div class="card" style="border-left-color: #ef4444;">
+                        <h3>Exam Lockdown</h3>
+                        <p>Student tablets par secure exam mode trigger karein.</p>
+                        <button onclick="switchTab('teacher-exam')">Manage Exams</button>
+                    </div>
+                `;
+            } else {
+                document.getElementById('sidebarTitle').innerText = 'Student Menu';
+                document.getElementById('studentMenus').style.display = 'block';
+                document.getElementById('teacherMenus').style.display = 'none';
+                document.getElementById('roleDisplayBadge').innerText = 'Student';
+                document.getElementById('page-title').innerText = 'Welcome Student Dashboard';
+                document.getElementById('profileRoleText').innerHTML = '<b>Role:</b> Student';
+                
+                homeContainer.innerHTML = `
+                    <div class="card" style="border-left-color: #3b82f6;">
+                        <h3>Digital Notebook</h3>
+                        <p>Hath se likhne aur notes banane ka digital page.</p>
+                        <button onclick="switchTab('notes')">Open Notebook</button>
+                    </div>
+                    <div class="card" style="border-left-color: #10b981;">
+                        <h3>3D Science Lab</h3>
+                        <p>Chasma pehankar Physics/Chem ke experiments karein.</p>
+                        <button onclick="switchTab('lab')">Enter Lab</button>
+                    </div>
+           
